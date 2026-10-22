@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Delivery form{% endblock %}
+{% block content %}
+    <div class="section-title">
+        <h2>Delivery</h2>
+        <p>Оформлення замовлення з доставки</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if errors %}
+        <ul class="errors">
+            {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+        </ul>
+    {% endif %}
+
+    <form class="form delivery-form" method="post">
+        <div class="form-row">
+            <label>Ім'я
+                <input type="text" name="name" required>
+            </label>
+            <label>Телефон
+                <input type="tel" name="phone" required>
+            </label>
+        </div>
+
+        <label>Адреса доставки
+            <input type="text" name="address" required>
+        </label>
+
+        <div class="form-row">
+            <label>Страва
+                <select name="dish_id" required>
+                    {% for d in dishes %}
+                        <option value="{{ d.id }}">{{ d.name }} — {{ d.price }} грн</option>
+                    {% else %}
+                        <option value="">Немає доступних страв</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>Кількість
+                <input type="number" name="quantity" min="1" value="1" required>
+            </label>
+        </div>
+
+        <label>Коментар
+            <textarea name="comment" rows="3" placeholder="Додаткові побажання..."></textarea>
+        </label>
+
+        <button type="submit">Замовити доставку</button>
+    </form>
+
+    <p style="text-align:center; margin-top: 24px;">
+        <a class="btn-outline" href="{{ url_for('menu') }}">To menu</a>
+    </p>
+{% endblock %}
