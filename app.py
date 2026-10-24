@@ -41,6 +41,14 @@ def dish_detail(dish_id):
 def deliveryForm():
     return render_template('delivery.html')
 
+@app.route('/login')
+def loginForm():
+    return render_template('login.html')
+
+@app.route('/register')
+def registerForm():
+    return render_template('register.html')
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <div class="section-title">
+        <h2>Login</h2>
+        <p>Увійдіть, щоб керувати своїми замовленнями</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if errors %}
+        <ul class="errors">
+            {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+        </ul>
+    {% endif %}
+
+    <form class="form auth-form" method="post">
+        <label>Email
+            <input type="email" name="email" maxlength="130" required>
+        </label>
+        <label>Пароль
+            <input type="password" name="password" required>
+        </label>
+
+        <button type="submit">Увійти</button>
+    </form>
+
+    <p class="auth-switch">
+        Ще не маєте акаунта?
+        <a href="{{ url_for('registerForm') }}">Зареєструватися</a>
+    </p>
+{% endblock %}

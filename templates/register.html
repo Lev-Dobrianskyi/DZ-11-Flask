@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Registration{% endblock %}
+{% block content %}
+    <div class="section-title">
+        <h2>Registration</h2>
+        <p>Створіть акаунт, щоб замовляти швидше</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if errors %}
+        <ul class="errors">
+            {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+        </ul>
+    {% endif %}
+
+    <form class="form auth-form" method="post">
+        <label>Ім'я користувача
+            <input type="text" name="username" maxlength="80" required>
+        </label>
+        <label>Email
+            <input type="email" name="email" maxlength="130" required>
+        </label>
+        <label>Пароль
+            <input type="password" name="password" minlength="6" required>
+        </label>
+
+        <button type="submit">Зареєструватися</button>
+    </form>
+
+    <p class="auth-switch">
+        Вже маєте акаунт?
+        <a href="{{ url_for('loginForm') }}">Увійти</a>
+    </p>
+{% endblock %}
